@@ -5,12 +5,12 @@
 ## 실행 정보
 
 - **시스템명**: phonebill
-- **ACR명**: acrdigitalgarage01
+- **ACR명**: acrdigitalgarage03
 - **서비스명**: phonebill-front
 - **VM 정보**:
-  - KEY파일: ~/home/bastion-dg0500
+  - KEY파일: ~/home/bastion-dg0511
   - USERID: azureuser
-  - IP: 4.230.5.6
+  - IP: 4.230.128.188
 
 ## 1. VM 접속 방법
 
@@ -21,10 +21,10 @@
 ### VM 접속
 ```bash
 # 최초 한번만 Private key 파일 권한 설정
-chmod 400 ~/home/bastion-dg0500
+chmod 400 ~/home/bastion-dg0511
 
 # VM 접속
-ssh -i ~/home/bastion-dg0500 azureuser@4.230.5.6
+ssh -i ~/home/bastion-dg0511 azureuser@4.230.128.188
 ```
 
 ## 2. 컨테이너 이미지 생성
@@ -35,7 +35,7 @@ ssh -i ~/home/bastion-dg0500 azureuser@4.230.5.6
 
 ### ACR 인증정보 확인
 ```bash
-az acr credential show --name acrdigitalgarage01
+az acr credential show --name acrdigitalgarage03
 ```
 
 출력 예시:
@@ -51,25 +51,25 @@ az acr credential show --name acrdigitalgarage01
       "value": "{암호2}"
     }
   ],
-  "username": "acrdigitalgarage01"
+  "username": "acrdigitalgarage03"
 }
 ```
 
 ### Docker 로그인
 ```bash
-docker login acrdigitalgarage01.azurecr.io -u acrdigitalgarage01 -p {위에서 확인한 암호}
+docker login acrdigitalgarage03.azurecr.io -u acrdigitalgarage03 -p {위에서 확인한 암호}
 ```
 
 ## 4. 컨테이너 이미지 푸시
 
 ### 이미지 태깅
 ```bash
-docker tag phonebill-front:latest acrdigitalgarage01.azurecr.io/phonebill/phonebill-front:latest
+docker tag phonebill-front:latest acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:latest
 ```
 
 ### 이미지 푸시
 ```bash
-docker push acrdigitalgarage01.azurecr.io/phonebill/phonebill-front:latest
+docker push acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:latest
 ```
 
 ## 5. 런타임 환경변수 파일 생성
@@ -85,10 +85,10 @@ cat > ~/phonebill-front/public/runtime-env.js << 'EOF'
 // 런타임 환경 설정
 window.__runtime_config__ = {
   // API 서버 설정
-  USER_HOST: 'http://4.230.5.6:8080',
-  BILL_HOST: 'http://4.230.5.6:8080', 
-  PRODUCT_HOST: 'http://4.230.5.6:8080',
-  KOS_MOCK_HOST: 'http://4.230.5.6:8080',
+  USER_HOST: 'http://4.230.128.188:8080',
+  BILL_HOST: 'http://4.230.128.188:8080',
+  PRODUCT_HOST: 'http://4.230.128.188:8080',
+  KOS_MOCK_HOST: 'http://4.230.128.188:8080',
   API_GROUP: '/api/v1',
   
   // 환경 설정
@@ -108,7 +108,7 @@ SERVER_PORT=3000
 
 docker run -d --name phonebill-front --rm -p ${SERVER_PORT}:8080 \
 -v ~/phonebill-front/public/runtime-env.js:/usr/share/nginx/html/runtime-env.js \
-acrdigitalgarage01.azurecr.io/phonebill/phonebill-front:latest
+acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:latest
 ```
 
 ## 7. 실행 확인
@@ -132,8 +132,8 @@ docker logs phonebill-front
 ### 8.2 컨테이너 이미지 푸시
 로컬에서 다음 명령으로 이미지를 푸시합니다:
 ```bash
-docker tag phonebill-front:latest acrdigitalgarage01.azurecr.io/phonebill/phonebill-front:latest
-docker push acrdigitalgarage01.azurecr.io/phonebill/phonebill-front:latest
+docker tag phonebill-front:latest acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:latest
+docker push acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:latest
 ```
 
 ### 8.3 기존 컨테이너 중지
@@ -144,7 +144,7 @@ docker stop phonebill-front
 
 ### 8.4 컨테이너 이미지 삭제
 ```bash
-docker rmi acrdigitalgarage01.azurecr.io/phonebill/phonebill-front:latest
+docker rmi acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:latest
 ```
 
 ### 8.5 컨테이너 재실행
@@ -154,14 +154,14 @@ SERVER_PORT=3000
 
 docker run -d --name phonebill-front --rm -p ${SERVER_PORT}:8080 \
 -v ~/phonebill-front/public/runtime-env.js:/usr/share/nginx/html/runtime-env.js \
-acrdigitalgarage01.azurecr.io/phonebill/phonebill-front:latest
+acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:latest
 ```
 
 ## 9. 접속 확인
 
 브라우저에서 다음 URL로 접속하여 서비스가 정상 동작하는지 확인합니다:
 ```
-http://4.230.5.6:3000
+http://4.230.128.188:3000
 ```
 
 ## 주의사항

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "SlashCommand(/sc:implement @devops --think @complex-flag)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
