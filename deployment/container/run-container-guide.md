@@ -64,12 +64,12 @@ docker login acrdigitalgarage03.azurecr.io -u acrdigitalgarage03 -p {위에서 �
 
 ### 이미지 태깅
 ```bash
-docker tag phonebill-front:latest acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:latest
+docker tag phonebill-front:latest acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:dg0511
 ```
 
 ### 이미지 푸시
 ```bash
-docker push acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:latest
+docker push acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:dg0511
 ```
 
 ## 5. 런타임 환경변수 파일 생성
@@ -108,7 +108,7 @@ SERVER_PORT=3000
 
 docker run -d --name phonebill-front --rm -p ${SERVER_PORT}:8080 \
 -v ~/phonebill-front/public/runtime-env.js:/usr/share/nginx/html/runtime-env.js \
-acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:latest
+acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:dg0511
 ```
 
 ## 7. 실행 확인
@@ -132,8 +132,8 @@ docker logs phonebill-front
 ### 8.2 컨테이너 이미지 푸시
 로컬에서 다음 명령으로 이미지를 푸시합니다:
 ```bash
-docker tag phonebill-front:latest acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:latest
-docker push acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:latest
+docker tag phonebill-front:latest acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:dg0511
+docker push acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:dg0511
 ```
 
 ### 8.3 기존 컨테이너 중지
@@ -144,7 +144,7 @@ docker stop phonebill-front
 
 ### 8.4 컨테이너 이미지 삭제
 ```bash
-docker rmi acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:latest
+docker rmi acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:dg0511
 ```
 
 ### 8.5 컨테이너 재실행
@@ -154,7 +154,7 @@ SERVER_PORT=3000
 
 docker run -d --name phonebill-front --rm -p ${SERVER_PORT}:8080 \
 -v ~/phonebill-front/public/runtime-env.js:/usr/share/nginx/html/runtime-env.js \
-acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:latest
+acrdigitalgarage03.azurecr.io/phonebill/phonebill-front:dg0511
 ```
 
 ## 9. 접속 확인
