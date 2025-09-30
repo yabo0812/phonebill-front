@@ -2,11 +2,10 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: phonebill-front
-  namespace: phonebill-dev
 spec:
   ingressClassName: nginx
   rules:
-  - host: phonebill.20.214.196.128.nip.io
+  - host: phonebill-dg0511-api.20.249.191.180.nip.io
     http:
       paths:
       - path: /
